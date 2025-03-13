@@ -1,16 +1,9 @@
-FROM python:3.11
+FROM python:3.11-bookworm
 
-RUN set -ex; \
-    { \
-        echo "deb http://deb.debian.org/debian/ bullseye main"; \
-        echo "deb http://security.debian.org/debian-security bullseye-security main"; \
-        echo "deb http://deb.debian.org/debian/ bullseye-updates main"; \
-    } > /etc/apt/sources.list; \
-    rm -rf /etc/apt/sources.list.d/*; \
-    apt-get update; \
+RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     gcc \
-    python3-dev; \
+    python3-dev && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
