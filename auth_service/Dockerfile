@@ -1,10 +1,13 @@
 FROM python:3.11
 
-RUN sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
-    apt-get update && apt-get install -y --no-install-recommends \
+# Исправленная команда для работы с современными образами Debian
+RUN set -ex; \
+    sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list.d/*.list; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
     gcc \
-    python3-dev \
-    && rm -rf /var/lib/apt/lists/*
+    python3-dev; \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY auth_service.py .

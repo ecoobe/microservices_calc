@@ -1,10 +1,15 @@
 FROM python:3.11
 
-RUN sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
-    apt-get update && apt-get install -y --no-install-recommends \
+# Добавлена обработка security-репозиториев
+RUN set -ex; \
+    for file in /etc/apt/sources.list /etc/apt/sources.list.d/*.list; do \
+        [ -f "$file" ] && sed -i 's/deb.debian.org/archive.debian.org/g' "$file"; \
+    done; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
     gcc \
-    python3-dev \
-    && rm -rf /var/lib/apt/lists/*
+    python3-dev; \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY calc_service.py .
