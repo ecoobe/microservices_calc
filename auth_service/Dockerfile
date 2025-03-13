@@ -1,8 +1,13 @@
 FROM python:3.11
 
-# Исправленная команда для работы с современными образами Debian
+# Универсальное решение для всех версий Debian
 RUN set -ex; \
-    sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list.d/*.list; \
+    { \
+        echo "deb http://deb.debian.org/debian/ bullseye main"; \
+        echo "deb http://security.debian.org/debian-security bullseye-security main"; \
+        echo "deb http://deb.debian.org/debian/ bullseye-updates main"; \
+    } > /etc/apt/sources.list; \
+    rm -rf /etc/apt/sources.list.d/*; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
     gcc \

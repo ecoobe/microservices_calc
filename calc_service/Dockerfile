@@ -1,10 +1,12 @@
 FROM python:3.11
 
-# Добавлена обработка security-репозиториев
 RUN set -ex; \
-    for file in /etc/apt/sources.list /etc/apt/sources.list.d/*.list; do \
-        [ -f "$file" ] && sed -i 's/deb.debian.org/archive.debian.org/g' "$file"; \
-    done; \
+    { \
+        echo "deb http://deb.debian.org/debian/ bullseye main"; \
+        echo "deb http://security.debian.org/debian-security bullseye-security main"; \
+        echo "deb http://deb.debian.org/debian/ bullseye-updates main"; \
+    } > /etc/apt/sources.list; \
+    rm -rf /etc/apt/sources.list.d/*; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
     gcc \

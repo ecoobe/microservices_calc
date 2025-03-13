@@ -1,12 +1,12 @@
 FROM python:3.11
 
-# Полная обработка всех возможных sources-файлов
 RUN set -ex; \
-    mkdir -p /etc/apt/sources.list.d; \
     { \
-        echo "deb http://archive.debian.org/debian bullseye main"; \
-        echo "deb http://archive.debian.org/debian-security bullseye-security main"; \
+        echo "deb http://deb.debian.org/debian/ bullseye main"; \
+        echo "deb http://security.debian.org/debian-security bullseye-security main"; \
+        echo "deb http://deb.debian.org/debian/ bullseye-updates main"; \
     } > /etc/apt/sources.list; \
+    rm -rf /etc/apt/sources.list.d/*; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
     gcc \
