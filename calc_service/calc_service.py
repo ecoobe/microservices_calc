@@ -5,6 +5,10 @@ app = Flask(__name__)
 AUTH_URL = "http://auth_service:5002/auth"  # Имя сервиса из docker-compose.yml
 HISTORY_URL = "http://history_service:5003/history"
 
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"}), 200
+
 @app.route("/calc/<operation>", methods=["POST"])
 def calculate(operation):
     data = request.json

@@ -18,6 +18,10 @@ def get_db():
         dbname=DB_NAME
     )
 
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"}), 200
+
 @app.route("/history", methods=["GET", "POST"])
 def handle_history():
     if request.method == "POST":
