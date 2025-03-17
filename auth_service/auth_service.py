@@ -3,8 +3,8 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 users = {"admin": "password"}
 
-@app.route("/auth", methods=["POST"])
-def auth():
+@app.route("/login", methods=["POST"])
+def login():
     data = request.json
     if users.get(data["username"]) == data["password"]:
         return jsonify({"status": "success"})
