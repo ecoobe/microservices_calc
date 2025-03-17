@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres:14
     ports:
-      - "5432:5432"  # Оставляем, если нужен доступ к БД извне
+      - "5432:5432"
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: secret
@@ -19,13 +19,17 @@ services:
 
   auth_service:
     build: ./auth_service
+    ports:
+      - "5002:5002"
     networks:
-      - sre_network  # Доступ только внутри Docker-сети
+      - sre_network
 
   calc_service:
     build: ./calc_service
+    ports:
+      - "5001:5001"
     environment:
-      - AUTH_URL=http://auth_service:5002/auth  # Внутренний адрес
+      - AUTH_URL=http://auth_service:5002/auth
       - HISTORY_URL=http://history_service:5003/history
     depends_on:
       postgres:
@@ -35,6 +39,8 @@ services:
 
   history_service:
     build: ./history_service
+    ports:
+      - "5003:5003"
     environment:
       - POSTGRES_HOST=postgres
       - POSTGRES_USER=admin
