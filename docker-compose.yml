@@ -29,7 +29,7 @@ services:
     ports:
       - "5001:5001"
     environment:
-      - AUTH_URL=http://auth_service:5002/auth
+      - AUTH_URL=http://auth_service:5002/login
       - HISTORY_URL=http://history_service:5003/history
     depends_on:
       postgres:
