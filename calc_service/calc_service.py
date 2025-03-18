@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 import requests
 
 app = Flask(__name__)
-AUTH_URL = "http://auth_service:5002/auth"  # Имя сервиса из docker-compose.yml
+AUTH_URL = "http://auth_service:5002/login"  # Имя сервиса из docker-compose.yml
 HISTORY_URL = "http://history_service:5003/history"
 
 @app.route("/health", methods=["GET"])
