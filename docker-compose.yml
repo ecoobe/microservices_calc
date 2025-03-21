@@ -68,12 +68,12 @@ services:
   nginx:
     image: nginx:1.23-alpine
     ports:
-      - "8080:80"
+      - "80:80"
       - "443:443"
     volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
+      - ./nginx:/etc/nginx/conf.d  # Конфиги Nginx из вашего проекта
+      - /etc/letsencrypt:/etc/letsencrypt  # Системные сертификаты
+      - /etc/letsencrypt:/etc/letsencrypt:ro  # Только для чтения (рекомендуется)
     depends_on:
       - frontend
       - calc_service
