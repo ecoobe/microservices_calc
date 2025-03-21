@@ -52,6 +52,36 @@ services:
     networks:
       - sre_network
 
+frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - calc_service
+      - auth_service
+      - history_service
+    networks:
+      - sre_network
+
+nginx:
+    image: nginx:1.23-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - frontend
+      - calc_service
+      - auth_service
+      - history_service
+    networks:
+      - sre_network
+
 networks:
   sre_network:
     driver: bridge

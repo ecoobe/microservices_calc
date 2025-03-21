@@ -14,8 +14,3 @@ venv/
 # IDE
 .vscode/
 .idea/
-# Добавьте удалённый репозиторий
-git remote add origin https://github.com/ваш-логин/microservices_calc.git
-
-# Загрузите код
-git push -u origin main
