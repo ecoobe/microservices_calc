@@ -71,9 +71,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx:/etc/nginx/conf.d  # Конфиги Nginx из вашего проекта
-      - /etc/letsencrypt:/etc/letsencrypt  # Системные сертификаты
-      - /etc/letsencrypt:/etc/letsencrypt:ro  # Только для чтения (рекомендуется)
+      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf  # Подключаем конкретный файл
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - frontend
       - calc_service
