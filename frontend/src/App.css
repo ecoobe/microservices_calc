@@ -1,0 +1,35 @@
+.App {
+	max-width: 600px;
+	margin: 2rem auto;
+	padding: 1rem;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+  }
+  
+  input, select, button {
+	padding: 0.5rem;
+	margin: 0.3rem;
+	width: 100%;
+	box-sizing: border-box;
+  }
+  
+  .result {
+	margin-top: 1rem;
+	padding: 1rem;
+	background: #f0f0f0;
+	border-radius: 4px;
+  }
+  
+  .history {
+	margin-top: 2rem;
+  }
+  
+  .history ul {
+	list-style: none;
+	padding: 0;
+  }
+  
+  .history li {
+	padding: 0.5rem;
+	border-bottom: 1px solid #eee;
+  }
