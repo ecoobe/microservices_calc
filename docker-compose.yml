@@ -52,7 +52,7 @@ services:
     networks:
       - sre_network
 
-frontend:
+  frontend:
     build: ./frontend
     ports:
       - "3000:80"
@@ -65,7 +65,7 @@ frontend:
     networks:
       - sre_network
 
-nginx:
+  nginx:
     image: nginx:1.23-alpine
     ports:
       - "80:80"
