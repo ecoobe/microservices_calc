@@ -57,15 +57,15 @@ services:
     ports:
       - "3000:80"
     volumes:
-      - ./frontend/public:/usr/share/nginx/html
+      - ./frontend/public:/usr/share/nginx/html  # Монтируем статику
     environment:
       - NODE_ENV=production
     depends_on:
       - calc_service
       - auth_service
-      - history_service
+      - history_service  
     networks:
-      - sre_network
+      - sre_network  
 
   nginx:
     image: nginx:1.23-alpine
