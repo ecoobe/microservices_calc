@@ -57,7 +57,7 @@ services:
     ports:
       - "3000:80"
     volumes:
-      - ./frontend/public:/usr/share/nginx/html  # Монтируем статику
+      - ./frontend/public:/usr/share/nginx/html
     environment:
       - NODE_ENV=production
     depends_on:
