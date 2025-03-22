@@ -71,8 +71,11 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./certbot/conf:/etc/letsencrypt  # Локальные сертификаты
-      - ./certbot/www:/var/www/certbot
+      - /etc/letsencrypt/live/coobe.ru/:/etc/letsencrypt/live/coobe.ru/  # Монтируем сертификаты
+      - /etc/letsencrypt/archive/coobe.ru/:/etc/letsencrypt/archive/coobe.ru/  # Монтируем архив сертификатов
+      - ./certbot/conf/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf  # Монтируем конфигурацию SSL
+      - ./certbot/conf/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem  # Монтируем параметры DH
+      - ./frontend/nginx.conf:/etc/nginx/nginx.conf  # Монтируем конфигурацию nginx
     depends_on:
       - frontend
       - calc_service
