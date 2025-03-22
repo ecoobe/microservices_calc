@@ -56,6 +56,8 @@ services:
     build: ./frontend
     ports:
       - "3000:80"
+    volumes:
+      - ./frontend/public:/usr/share/nginx/html  # Монтируем статику
     environment:
       - NODE_ENV=production
     depends_on:
@@ -71,11 +73,11 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /etc/letsencrypt/live/coobe.ru/:/etc/letsencrypt/live/coobe.ru/  # Монтируем сертификаты
-      - /etc/letsencrypt/archive/coobe.ru/:/etc/letsencrypt/archive/coobe.ru/  # Монтируем архив сертификатов
-      - ./certbot/conf/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf  # Монтируем конфигурацию SSL
-      - ./certbot/conf/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem  # Монтируем параметры DH
-      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf # Монтируем конфигурацию nginx
+      - /etc/letsencrypt/live/coobe.ru/:/etc/letsencrypt/live/coobe.ru/
+      - /etc/letsencrypt/archive/coobe.ru/:/etc/letsencrypt/archive/coobe.ru/
+      - ./certbot/conf/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
+      - ./certbot/conf/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
+      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - frontend
       - calc_service
