@@ -73,6 +73,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
+      - ./frontend/public:/usr/share/nginx/html 
       - /etc/letsencrypt/live/coobe.ru/:/etc/letsencrypt/live/coobe.ru/
       - /etc/letsencrypt/archive/coobe.ru/:/etc/letsencrypt/archive/coobe.ru/
       - ./certbot/conf/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
