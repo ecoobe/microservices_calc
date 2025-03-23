@@ -127,16 +127,16 @@ services:
     command:
       - --httpListenAddr=:8428
       - --promscrape.config=/etc/victoriametrics/prometheus.yml
-      - --basicAuth.username=${VM_USER:-admin}  # Дефолтный логин
-      - --basicAuth.password=${VM_PASSWORD:-secret}  # Дефолтный пароль
+      - --basicAuth.username=${VM_USER:-admin}
+      - --basicAuth.password=${VM_PASSWORD:-secret}
       - --memory.allowedPercent=50
-      - --retentionPeriod=6  # Хранить данные 6 месяцев
+      - --retentionPeriod=6
     volumes:
-      - victoriametrics_data:/victoria-metrics-data  # Постоянное хранилище
+      - victoriametrics_data:/var/lib/victoriametrics/data
       - ./prometheus/prometheus.yml:/etc/victoriametrics/prometheus.yml
     networks:
       - sre_network
-    env_file: .env  # Подключаем .env-файл
+    env_file: .env
     ports:
       - "8428:8428"
     depends_on:
