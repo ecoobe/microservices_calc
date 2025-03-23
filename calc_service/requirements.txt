@@ -1,0 +1,5 @@
+# calc_service/requirements.txt 
+Flask==3.0.2
+requests==2.31.0
+prometheus-client==0.20.0
+Werkzeug==3.0.1

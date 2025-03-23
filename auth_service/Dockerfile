@@ -7,7 +7,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 COPY auth_service.py .
-RUN pip install --no-cache-dir flask==3.0.2
 
 CMD ["python", "auth_service.py"]
