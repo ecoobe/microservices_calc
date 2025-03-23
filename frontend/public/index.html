@@ -3,15 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/styles.css">
     <title>Калькулятор</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; background-color: #464451; }
-        .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px;
- border-radius: 8px;}
-        .form-group { margin-bottom: 10px; }
-        input, select, button { padding: 8px; margin: 5px; width: 200px; }
-        #result { margin-top: 20px; padding: 10px; background: #f0f0f0; }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -35,38 +29,6 @@
         </form>
         <div id="result"></div>
     </div>
-
-    <script>
-        document.getElementById('calcForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const a = parseFloat(document.getElementById('a').value);
-            const b = parseFloat(document.getElementById('b').value);
-            const operation = document.getElementById('operation').value;
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            try {
-                const response = await fetch(`/calc/${operation}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password, a, b })
-                });
-
-                const data = await response.json();
-                const resultDiv = document.getElementById('result');
-                
-                if (response.ok) {
-                    resultDiv.style.color = 'green';
-                    resultDiv.textContent = `Результат: ${data.result}`;
-                } else {
-                    resultDiv.style.color = 'red';
-                    resultDiv.textContent = `Ошибка: ${data.error}`;
-                }
-            } catch (error) {
-                document.getElementById('result').textContent = 'Ошибка подключения';
-            }
-        });
-    </script>
+    <script src="/js/app.js"></script>
 </body>
 </html>
