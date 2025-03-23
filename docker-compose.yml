@@ -127,8 +127,8 @@ services:
     command:
       - --httpListenAddr=:8428
       - --promscrape.config=/etc/victoriametrics/prometheus.yml
-      - --basicAuth.username=${VM_USER:-admin}
-      - --basicAuth.password=${VM_PASSWORD:-secret}
+      - --metricsAuth.username=${VM_USER:-admin}
+      - --metricsAuth.password=${VM_PASSWORD:-secret}
       - --memory.allowedPercent=50
       - --retentionPeriod=6
     volumes:
