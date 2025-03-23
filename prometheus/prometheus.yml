@@ -1,0 +1,28 @@
+global:
+  scrape_interval: 15s   # Как часто собирать метрики
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Мониторим Node Exporter (метрики сервера)
+  - job_name: "node-exporter"
+    static_configs:
+      - targets: ["node-exporter:9100"]
+
+  # Мониторим микросервисы (пример для calc_service)
+  - job_name: "calc_service"
+    static_configs:
+      - targets: ["calc_service:5001"]  # Порт вашего микросервиса
+
+  # Добавьте аналогично для auth_service и history_service
+  - job_name: "auth_service"
+    static_configs:
+      - targets: ["auth_service:5002"]
+
+  - job_name: "history_service"
+    static_configs:
+      - targets: ["history_service:5003"]
+
+  # Мониторинг PostgreSQL (дополнительно, требует настройки экспортера)
+  # - job_name: "postgres"
+  #   static_configs:
+  #     - targets: ["postgres:5432"]
