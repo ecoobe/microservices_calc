@@ -159,6 +159,7 @@ services:
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
+    user: "472"
     ports:
       - "3001:3000"
     networks:
@@ -168,14 +169,21 @@ services:
       - alertmanager
 
 volumes:
-  grafana_data:
-  postgres_data:
+  grafana_data:  # Добавлен том для Grafana
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /opt/grafana_data
+
   victoriametrics_data:  # Добавлен том для VictoriaMetrics
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /opt/victoriametrics-data  # Путь на хосте
+      device: /opt/victoriametrics-data
+
+  postgres_data:
 
 networks:
   sre_network:
