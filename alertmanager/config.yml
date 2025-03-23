@@ -1,0 +1,7 @@
+route:
+  receiver: default
+
+receivers:
+  - name: default
+    webhook_configs:
+      - url: http://your-webhook-url  # Например, Slack или Telegram

@@ -140,29 +140,56 @@ services:
     command:
       - --httpListenAddr=:8428
       - --promscrape.config=/etc/victoriametrics/prometheus.yml
+      - --basicAuth.username=${VM_USER:-admin}  # Дефолтный логин
+      - --basicAuth.password=${VM_PASSWORD:-secret}  # Дефолтный пароль
+      - --memory.allowedPercent=50
+      - --retentionPeriod=6  # Хранить данные 6 месяцев
+    volumes:
+      - victoriametrics_data:/victoria-metrics-data  # Постоянное хранилище
+      - ./prometheus/prometheus.yml:/etc/victoriametrics/prometheus.yml
     networks:
       - sre_network
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/victoriametrics/prometheus.yml
+    env_file: .env  # Подключаем .env-файл
     ports:
       - "8428:8428"
+    depends_on:
+      - node-exporter
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: alertmanager
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager/config.yml:/etc/alertmanager/config.yml  # Конфиг алертов
+    networks:
+      - sre_network
+    depends_on:
+      - victoriametrics
 
   grafana:
     image: grafana/grafana-enterprise:latest
     volumes:
       - grafana_data:/var/lib/grafana
-      - ./grafana/provisioning:/etc/grafana/provisioning  # Ключевая строка!
+      - ./grafana/provisioning:/etc/grafana/provisioning
     ports:
       - "3001:3000"
     networks:
       - sre_network
     depends_on:
       - victoriametrics
+      - alertmanager
+
+volumes:
+  grafana_data:
+  postgres_data:
+  victoriametrics_data:  # Добавлен том для VictoriaMetrics
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /opt/victoriametrics-data  # Путь на хосте
 
 networks:
   sre_network:
     driver: bridge
-
-volumes:
-  grafana_data:    # Том для сохранения данных Grafana
-  postgres_data:    # Том для БД Postgres
