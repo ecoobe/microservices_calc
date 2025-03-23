@@ -73,11 +73,17 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./frontend/public:/usr/share/nginx/html 
+      - ./frontend/public:/usr/share/nginx/html
+      # Основной домен
       - /etc/letsencrypt/live/coobe.ru/:/etc/letsencrypt/live/coobe.ru/
       - /etc/letsencrypt/archive/coobe.ru/:/etc/letsencrypt/archive/coobe.ru/
+      # Поддомены (используем тот же сертификат)
+      - /etc/letsencrypt/live/grafana.coobe.ru/:/etc/letsencrypt/live/grafana.coobe.ru/
+      - /etc/letsencrypt/archive/grafana.coobe.ru/:/etc/letsencrypt/archive/grafana.coobe.ru/
+      # Общие SSL-настройки
       - ./certbot/conf/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
       - ./certbot/conf/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
+      # Конфиг Nginx
       - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - frontend
