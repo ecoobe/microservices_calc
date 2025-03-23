@@ -108,17 +108,17 @@ services:
       - node-exporter
 
   # Grafana для визуализации
-  grafana:
-    image: grafana/grafana-enterprise:latest
-    container_name: grafana
-    ports:
-      - "3001:3000"
-    volumes:
-      - grafana_data:/var/lib/grafana
-    networks:
-      - sre_network
-    depends_on:
-      - prometheus
+  # grafana:
+  #   image: grafana/grafana-enterprise:latest
+  #   container_name: grafana
+  #   ports:
+  #     - "3001:3000"
+  #   volumes:
+  #     - grafana_data:/var/lib/grafana
+  #   networks:
+  #     - sre_network
+  #   depends_on:
+  #     - prometheus
 
   # Node Exporter для метрик хоста
   node-exporter:
@@ -133,6 +133,31 @@ services:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /:/rootfs:ro
+
+  victoriametrics:
+    image: victoriametrics/victoria-metrics:latest
+    container_name: victoriametrics
+    command:
+      - --httpListenAddr=:8428
+      - --promscrape.config=/etc/victoriametrics/prometheus.yml
+    networks:
+      - sre_network
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/victoriametrics/prometheus.yml
+    ports:
+      - "8428:8428"
+
+  grafana:
+    image: grafana/grafana-enterprise:latest
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning  # Ключевая строка!
+    ports:
+      - "3001:3000"
+    networks:
+      - sre_network
+    depends_on:
+      - victoriametrics
 
 networks:
   sre_network:
