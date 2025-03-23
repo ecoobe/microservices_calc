@@ -107,19 +107,6 @@ services:
     depends_on:
       - node-exporter
 
-  # Grafana для визуализации
-  # grafana:
-  #   image: grafana/grafana-enterprise:latest
-  #   container_name: grafana
-  #   ports:
-  #     - "3001:3000"
-  #   volumes:
-  #     - grafana_data:/var/lib/grafana
-  #   networks:
-  #     - sre_network
-  #   depends_on:
-  #     - prometheus
-
   # Node Exporter для метрик хоста
   node-exporter:
     image: prom/node-exporter:latest
