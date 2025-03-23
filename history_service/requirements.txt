@@ -1,4 +1,5 @@
-# auth_service/requirements.txt
+# history_service/requirements.txt
 Flask==3.0.2
+psycopg2-binary==2.9.9
 prometheus-client==0.20.0
 Werkzeug==3.0.1
